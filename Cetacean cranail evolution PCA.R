@@ -47,27 +47,27 @@ merged <- merge(pc_scores,
                 specimen_table[, c("match_name", "Suborder")], 
                 by = "match_name", all.x = TRUE)
 
-### 11. Manual fixes Suborder
+### 11. Manual fixes Suborder - .pts file name and excel sheet name mismatch
 merged$Suborder[merged$match_name == "Patriocetid sp."] <- "Odontocete"
 merged$Suborder[merged$match_name == "Waipatiid new"] <- "Odontocete"
 merged$Suborder[merged$match_name == "Xenorophus new"] <- "Odontocete"
 
-### 12. Merge Age
+### 12. Merge Age 
 merged <- merge(merged,
                 specimen_table[, c("match_name", "Age")],
                 by = "match_name", all.x = TRUE)
 
-### 13. Manual fixes Age
+### 13. Manual fixes Age - .pts file name and excel sheet name mismatch
 merged$Age[merged$match_name == "Patriocetid sp."] <- "Oligocene"
 merged$Age[merged$match_name == "Waipatiid new"] <- "Oligocene"
 merged$Age[merged$match_name == "Xenorophus new"] <- "Oligocene"
 
 
-### 14. Flip PC1
+### 14. Flip PC1 to morphospace orientation matches Coombs et al.'s figure for comparison
 merged$Comp1_flipped <- -merged$Comp1
 merged$Comp2_flipped <- merged$Comp2
 
-### 15. Colors and shapes
+### 15. Colors and shapes, feel free to change if color code
 age_cols <- c("Eocene"    = "#E69F00",
               "Oligocene" = "#F0E442",
               "Miocene"   = "#D4AC98",
@@ -78,7 +78,7 @@ pchs <- c("Archaeocete" = 24,
           "Mysticete"   = 22,
           "Odontocete"  = 21)
 
-### 16. Outliers and their label positions
+### 16. Outliers and their label positions, outliners are used to compare two results 
 outliers <- c("Ambulocetus natans",
               "Odobenocetops peruvianus",
               "Caperea marginata",
@@ -110,7 +110,7 @@ y_nudge <- c( 0.01,   # Ambulocetus natans
               0.01,   # Miocaperea pulchra
               0.01)   # Fucaia goedertorum
 
-### 17. Save plot
+### 17. Plot
 png("Cetacean_Morphospace.png", width=5000, height=3500, res=300)
 
 ### Add left margin so "Odobenocetops peruvianus" label has room
@@ -159,8 +159,8 @@ outlier_rows <- outlier_rows[!is.na(outlier_rows$match_name), ]
 text(outlier_rows$Comp1_flipped + x_nudge,
      outlier_rows$Comp2_flipped + y_nudge,
      labels = outlier_rows$match_name,
-     cex    = 1.5,
-     font   = 1)   # 1 = plain
+     cex    = 1.6,
+     font   = 3)   # 1 = plain
 
 dev.off()
 
